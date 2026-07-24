@@ -100,6 +100,7 @@ the pointer to pass by value)
 #include "CGOptions.h"
 
 #include "git_version.h"
+#include "ParametricRndNumGenerator.h"
 #include "platform.h"
 #include "random.h"
 
@@ -1859,6 +1860,54 @@ int main(int argc, char **argv) {
       CGOptions::max_array_length_per_dimension(5);
       continue;
     }
+
+    const char *parametric_rng_prefix = "--parametric-rng-file=";
+    const size_t parametric_rng_prefix_len = strlen(parametric_rng_prefix);
+    if (strncmp(argv[i], parametric_rng_prefix, parametric_rng_prefix_len) == 0) {
+      string path(argv[i] + parametric_rng_prefix_len);
+      if (path.empty()) {
+        cout << "please specify a path for --parametric-rng-file" << std::endl;
+        exit(-1);
+      }
+      ParametricRndNumGenerator::load_param_file(path);
+      continue;
+    }
+
+    if (strcmp(argv[i], "--parametric-rng-file") == 0) {
+      string path;
+      i++;
+      arg_check(argc, i);
+      if (!parse_string_arg(argv[i], path)) {
+        cout << "please specify a path for --parametric-rng-file" << std::endl;
+        exit(-1);
+      }
+      ParametricRndNumGenerator::load_param_file(path);
+      continue;
+    }
+
+    const char *rng_trace_prefix = "--rng-trace-out=";
+    const size_t rng_trace_prefix_len = strlen(rng_trace_prefix);
+    if (strncmp(argv[i], rng_trace_prefix, rng_trace_prefix_len) == 0) {
+      string path(argv[i] + rng_trace_prefix_len);
+      if (path.empty()) {
+        cout << "please specify a path for --rng-trace-out" << std::endl;
+        exit(-1);
+      }
+      ParametricRndNumGenerator::set_trace_out(path);
+      continue;
+    }
+
+    if (strcmp(argv[i], "--rng-trace-out") == 0) {
+      string path;
+      i++;
+      arg_check(argc, i);
+      if (!parse_string_arg(argv[i], path)) {
+        cout << "please specify a path for --rng-trace-out" << std::endl;
+        exit(-1);
+      }
+      ParametricRndNumGenerator::set_trace_out(path);
+      continue;
+    }
     // OMIT help
 
     // OMIT compute-hash
@@ -1897,6 +1946,7 @@ int main(int argc, char **argv) {
     exit(-1);
   }
   generator->goGenerator();
+  ParametricRndNumGenerator::write_trace();
   delete generator;
 
   //	file.close();

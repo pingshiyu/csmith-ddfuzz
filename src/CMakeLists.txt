@@ -139,6 +139,8 @@ set(csmith_SOURCES
   LinearSequence.h
   OutputMgr.cpp
   OutputMgr.h
+  ParametricRndNumGenerator.cpp
+  ParametricRndNumGenerator.h
   PartialExpander.cpp
   PartialExpander.h
   Probabilities.cpp

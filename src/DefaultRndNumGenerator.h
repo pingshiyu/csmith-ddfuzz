@@ -66,9 +66,10 @@ public:
 
   virtual ~DefaultRndNumGenerator() override;
 
-private:
+protected:
   DefaultRndNumGenerator(const unsigned long seed, Sequence *concrete_seq);
 
+private:
   void add_number(int v, int bound, int k);
 
   static DefaultRndNumGenerator *impl_;

@@ -34,13 +34,15 @@
 
 class Filter;
 
-enum class RNDNUM_GENERATOR {
+enum class RNDNUM_GENERATOR
+{
   rDefaultRndNumGenerator = 0,
   rDFSRndNumGenerator,
+  rParametricRndNumGenerator
 };
 
 inline constexpr unsigned int MAX_RNDNUM_GENERATOR =
-    static_cast<unsigned int>(RNDNUM_GENERATOR::rDFSRndNumGenerator) + 1;
+    static_cast<unsigned int>(RNDNUM_GENERATOR::rParametricRndNumGenerator) + 1;
 
 // I could make AbsRndNumGenerator not pure, but want to force each subclass
 // implement it's own member functions, in case of forgetting something.

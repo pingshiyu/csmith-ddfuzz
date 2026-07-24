@@ -36,6 +36,7 @@
 #include "ExtensionMgr.h"
 #include "Finalization.h"
 #include "Function.h"
+#include "ParametricRndNumGenerator.h"
 #include "RandomNumber.h"
 #include "SafeOpFlags.h"
 #include "Type.h"
@@ -52,7 +53,10 @@ DefaultProgramGenerator::~DefaultProgramGenerator() {
 }
 
 void DefaultProgramGenerator::initialize() {
-  RandomNumber::CreateInstance(RNDNUM_GENERATOR::rDefaultRndNumGenerator, seed_);
+  RNDNUM_GENERATOR rng = ParametricRndNumGenerator::requested()
+                             ? RNDNUM_GENERATOR::rParametricRndNumGenerator
+                             : RNDNUM_GENERATOR::rDefaultRndNumGenerator;
+  RandomNumber::CreateInstance(rng, seed_);
   output_mgr_ = DefaultOutputMgr::CreateInstance();
   assert(output_mgr_);
 

@@ -37,6 +37,7 @@
 
 #include "DFSRndNumGenerator.h"
 #include "DefaultRndNumGenerator.h"
+#include "ParametricRndNumGenerator.h"
 
 using namespace std;
 
@@ -74,6 +75,9 @@ AbsRndNumGenerator::make_rndnum_generator(RNDNUM_GENERATOR impl,
     break;
   case RNDNUM_GENERATOR::rDFSRndNumGenerator:
     rImpl = DFSRndNumGenerator::make_rndnum_generator();
+    break;
+  case RNDNUM_GENERATOR::rParametricRndNumGenerator:
+    rImpl = ParametricRndNumGenerator::make_rndnum_generator(seed);
     break;
   default:
     assert(!"unknown random generator");
